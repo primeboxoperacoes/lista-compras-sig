@@ -6,177 +6,106 @@
 <title>Lista de Compras - PDV SIG</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f4f8;min-height:100vh}
 .header{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);color:#fff;padding:16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.header h1{font-size:1.1rem;font-weight:700}
-.header-sub{font-size:.75rem;opacity:.8}
+.htitle{font-size:1.1rem;font-weight:700}.hsub{font-size:.75rem;opacity:.8}
 .att-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);color:#fff;padding:8px 12px;border-radius:8px;font-size:.8rem;cursor:pointer;white-space:nowrap}
 .summary-bar{background:#1d4ed8;color:#fff;padding:8px 16px;font-size:.8rem;display:flex;gap:16px}
 .category{margin:12px 8px 4px;font-size:.7rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-left:3px solid #1d4ed8}
 .item{background:#fff;margin:4px 8px;border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.item-info{flex:1;min-width:0}
-.item-code{font-size:.65rem;color:#94a3b8;font-family:monospace}
+.item-info{flex:1;min-width:0}.item-code{font-size:.65rem;color:#94a3b8;font-family:monospace}
 .item-name{font-size:.85rem;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.item-stock{font-size:.72rem;color:#64748b;margin-top:2px}
-.item-falta{font-size:.72rem;color:#ef4444;font-weight:600}
-.qty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
-.qty-label{font-size:.6rem;color:#94a3b8}
+.item-stock{font-size:.72rem;color:#64748b;margin-top:2px}.item-falta{font-size:.72rem;color:#ef4444;font-weight:600}
+.qty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}.qty-label{font-size:.6rem;color:#94a3b8}
 .qty-input{width:60px;height:40px;border:2px solid #e2e8f0;border-radius:8px;text-align:center;font-size:1rem;font-weight:700;color:#1e293b;background:#f8fafc;-webkit-appearance:none;appearance:none}
-.qty-input:focus{outline:none;border-color:#1d4ed8;background:#eff6ff}
-.qty-input.filled{border-color:#10b981;background:#ecfdf5;color:#065f46}
+.qty-input:focus{outline:none;border-color:#1d4ed8;background:#eff6ff}.qty-input.filled{border-color:#10b981;background:#ecfdf5;color:#065f46}
 .fab{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1e3a8a,#1d4ed8);color:#fff;border:none;border-radius:50px;padding:14px 32px;font-size:1rem;font-weight:700;box-shadow:0 4px 20px rgba(29,78,216,.4);cursor:pointer;z-index:200;white-space:nowrap}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:flex-end;justify-content:center}.modal-bg.open{display:flex}
 .modal{background:#fff;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto}
-.modal h2{font-size:1rem;margin-bottom:12px;color:#1e293b}
-.resumo-lista{margin-bottom:12px}
-.resumo-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;color:#334155}
-.resumo-qty{font-weight:700;color:#1d4ed8}
-.modal-btns{display:flex;gap:8px;flex-wrap:wrap}
-.mbtn{flex:1;padding:12px;border:none;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;min-width:80px}
-.mbtn-close{background:#f1f5f9;color:#64748b}
-.mbtn-copy{background:#1e3a8a;color:#fff}
-.mbtn-script{background:linear-gradient(135deg,#065f46,#0d9488);color:#fff}
-.info-msg{font-size:.72rem;color:#475569;background:#f8fafc;padding:10px;border-radius:8px;margin-top:8px;display:none;line-height:1.5}
+.modal h2{font-size:1rem;margin-bottom:12px;color:#1e293b}.resumo-lista{margin-bottom:12px}
+.resumo-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;color:#334155}.resumo-qty{font-weight:700;color:#1d4ed8}
+.modal-btns{display:flex;gap:8px;flex-wrap:wrap}.mbtn{flex:1;padding:12px;border:none;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;min-width:80px}
+.mbtn-close{background:#f1f5f9;color:#64748b}.mbtn-copy{background:#1e3a8a;color:#fff}.mbtn-script{background:linear-gradient(135deg,#065f46,#0d9488);color:#fff}
 .copied-msg{text-align:center;color:#10b981;font-size:.8rem;font-weight:600;margin-top:8px;display:none}
 .modal-att{background:#fff;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto}
-.modal-att h2{font-size:1rem;margin-bottom:8px;color:#1e293b}
 .prompt-box{background:#f1f5f9;border-radius:8px;padding:12px;font-size:.78rem;color:#334155;margin:12px 0;line-height:1.5}
-.att-btns{display:flex;gap:8px}
-.abtn{flex:1;padding:12px;border:none;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer}
-.abtn-f{background:#f1f5f9;color:#64748b}
-.abtn-c{background:#1e3a8a;color:#fff}
+.att-btns{display:flex;gap:8px}.abtn{flex:1;padding:12px;border:none;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer}
+.abtn-f{background:#f1f5f9;color:#64748b}.abtn-c{background:#1e3a8a;color:#fff}
 .ok-msg{text-align:center;color:#10b981;font-size:.8rem;font-weight:600;margin-top:8px;display:none}
-.empty{text-align:center;padding:40px;color:#94a3b8;font-size:.9rem}
-</style>
-</head>
-<body>
-<div class="header">
-  <div>
-    <div class="header h1">Lista de Compras</div>
-    <div class="header-sub">PDV SIG - Primebox Operacoes</div>
-  </div>
-  <button class="att-btn" onclick="abrirAtt()">&#x21BB; Atualizar Lista</button>
-</div>
-<div class="summary-bar">
-  <span id="total-itens">0 itens</span>
-  <span id="total-comprados">0 preenchidos</span>
-</div>
+</style></head><body>
+<div class="header"><div><div class="htitle">Lista de Compras</div><div class="hsub">PDV SIG - Primebox Operacoes</div></div><button class="att-btn" onclick="abrirAtt()">&#x21BB; Atualizar Lista</button></div>
+<div class="summary-bar"><span id="total-itens">0 itens</span><span id="total-comprados">0 preenchidos</span></div>
 <div id="lista"></div>
 <div style="height:80px"></div>
 <button class="fab" onclick="abrirResumo()">Ver Resumo</button>
-<div class="modal-bg" id="modal-resumo">
-  <div class="modal">
-    <h2>Resumo da Compra</h2>
-    <div class="resumo-lista" id="resumo-lista"></div>
-    <div class="modal-btns">
-      <button class="mbtn mbtn-close" onclick="fecharModal()">Fechar</button>
-      <button class="mbtn mbtn-copy" onclick="copiarLista()">Copiar Lista</button>
-      <button class="mbtn mbtn-script" onclick="gerarScript()">&#128231; Enviar Script</button>
-    </div>
-    <p class="copied-msg" id="copied-msg">Copiado!</p>
-  </div>
-</div>
-<div class="modal-bg" id="modal-att">
-  <div class="modal-att">
-    <h2>&#x21BB; Atualizar Lista de Compras</h2>
-    <p>Copie o prompt abaixo e cole na extensao do Claude. Ele vai acessar o VMpay, ler o estoque atual e atualizar esta lista automaticamente.</p>
-    <div class="prompt-box">Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.</div>
-    <div class="att-btns">
-      <button class="abtn abtn-f" onclick="fecharAtt()">Fechar</button>
-      <button class="abtn abtn-c" onclick="copiarPrompt()">Copiar Prompt</button>
-    </div>
-    <p class="ok-msg" id="ok-msg">Prompt copiado! Cole na extensao do Claude.</p>
-  </div>
-</div>
+<div class="modal-bg" id="modal-resumo"><div class="modal"><h2>Resumo da Compra</h2><div class="resumo-lista" id="resumo-lista"></div><div class="modal-btns"><button class="mbtn mbtn-close" onclick="fecharModal()">Fechar</button><button class="mbtn mbtn-copy" onclick="copiarLista()">Copiar Lista</button><button class="mbtn mbtn-script" onclick="gerarScript()">&#128231; Enviar Script</button></div><p class="copied-msg" id="copied-msg">Copiado!</p></div></div>
+<div class="modal-bg" id="modal-att"><div class="modal-att"><h2>&#x21BB; Atualizar Lista de Compras</h2><p>Copie o prompt abaixo e cole na extensao do Claude.</p><div class="prompt-box">Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.</div><div class="att-btns"><button class="abtn abtn-f" onclick="fecharAtt()">Fechar</button><button class="abtn abtn-c" onclick="copiarPrompt()">Copiar Prompt</button></div><p class="ok-msg" id="ok-msg">Prompt copiado!</p></div></div>
 <script>
-var D=[["BEB0048","SUCO DEL VALLE UVA LT 290ML",0,3,"Bebidas"],["ACO0021","PULLED PORK LA TOCINETA DESFIADO C/MOLHO BARBECUE 400G",2,1,"Acougue"],["BEB0006","REFRI COCA COLA ZERO 1,5L",5,1,"Bebidas"],["BEB0008","REFRI COCA COLA LT 350ML",5,7,"Bebidas"],["BEB0009","REFRI COCA COLA ZERO LT 350ML",9,9,"Bebidas"],["BEB0010","ENERGETICO MONSTER ULTRA 473ML",5,1,"Bebidas"],["BEB0016","REFRI FANTA UVA LT 350ML",3,3,"Bebidas"],["BEB0022","REFRI H2O LIMONETO 500ML",4,2,"Bebidas"],["BEB0028","AGUA MINERAL CRYSTAL C/GAS 500ML",5,3,"Bebidas"],["BEB0032","MATTE LEAO NATURAL PET 1,5L",4,1,"Bebidas"],["BEB0034","BEBIDA TODDYNHO UHT CHOCOLATE 200ML",12,6,"Bebidas"],["BEB0036","AGUA TONICA ANTARCTICA ZERO LT 350ML",5,1,"Bebidas"],["BEB0038","BEBIDA PROT YOPRO CHOCOLATE 250ML",10,2,"Bebidas"],["BEB0039","BEBIDA YOPRO MORANGO 250ML",5,1,"Bebidas"],["BEB0051","AGUA DE COCO INTEGRAL PURI 300ML",7,1,"Bebidas"],["BEB0064","SUCO DEL VALLE KAPO MORANGO 200ML",5,1,"Bebidas"],["BEB0066","REFRESCO GUARAVITON GUARANA E GINSENG 500ML",6,2,"Bebidas"],["BEB0389","REFRI SCHWEPPES CITRUS 350ML",4,2,"Bebidas"],["BEB0692","ENERGETICO RED BULL ZERO 250ML",5,1,"Bebidas"],["BOM0008","KINDER BUENO WHITE 39G",0,6,"Bomboniere"],["BOM0009","CHOC BIS LACTA 45G XTRA AO LEITE",5,1,"Bomboniere"],["BOM0011","CHOC LACTA AO LEITE 80G",2,2,"Bomboniere"],["BOM0018","CHOC SNICKERS 45GR",1,5,"Bomboniere"],["BOM0019","CHOC TALENTO CASTANHA-DO-PARA 85G",3,3,"Bomboniere"],["BOM0020","CHOC NESTLE KIT KAT TRAD 41,5G",6,2,"Bomboniere"],["BOM0024","CHICLETE TRIDENT MELANCIA 8G",7,3,"Bomboniere"],["BOM0026","BALA HALLS EXTRA FORTE 27,5G",6,2,"Bomboniere"],["BOM0028","BALA HALLS MELANCIA 28G",5,3,"Bomboniere"],["BOM0032","PACOCA SANTA HELENA ROLHA 15G",16,16,"Bomboniere"],["BOM0035","CHOC TWIX AO LEITE ORIGINAL 40G",3,3,"Bomboniere"],["BOM0040","CHOC LACTA LAKA BRANCO 80G",1,3,"Bomboniere"],["BOM0050","BARRA DE CEREAL NUTRY AVELA C/ CHOCOLATE 22G",7,1,"Bomboniere"],["BOM0064","CHOC LACTA DIAMANTE NEGRO 80G",3,1,"Bomboniere"],["BOM0066","CHOC NESTLE CHARGE AO LEITE 30G",6,2,"Bomboniere"],["BOM0072","CHOC M&M AMENDOIM 45G",3,3,"Bomboniere"],["BOM0074","DROPS HALLS MORANGO 28G",5,3,"Bomboniere"],["BOM0076","CHOC LACTA OREO 80G",2,4,"Bomboniere"],["BOM0079","CHOC KINDER BUENO 43G",6,6,"Bomboniere"],["BOM0082","BARRA DE CEREAL NUTRY BANANA C/ MEL E GRANOLA 22G",5,1,"Bomboniere"],["BOM0087","CHOC LACTA SHOT DARK 45G",3,3,"Bomboniere"],["BOM0092","CHOC LACTA FIVE STAR 40G",3,3,"Bomboniere"],["BOM0093","CHOC LACTA LACTA AO LEITE 80G",1,5,"Bomboniere"],["BOM0097","BALA MENTOS FRUIT 37,5G",6,6,"Bomboniere"],["BOM0102","CHOC FERRERO ROCHER 3 UN 37,5G",4,2,"Bomboniere"],["CON0003","LASANHA BOL NAO BASTA BOLONHESA 600G",0,2,"Congelados"],["CON0007","PIZZA SADIA MUSSARELA 460G",1,1,"Congelados"],["CON0010","LASANHA NAO BASTA FRANGO C/ CATUPIRY 600G",1,1,"Congelados"],["CON0018","NUGGETS SADIA 300G",2,4,"Congelados"],["MER0005","BARRA DE CEREAL TRIO BANANA C/AVEIA 20G",7,5,"Mercearia"],["MER0007","BARRA DE CEREAL TRIO CASTANHA C/ MEL 20G",6,2,"Mercearia"],["MER0008","ACHOC PO NESCAU 2.0 400G",1,1,"Mercearia"],["MER0010","CAFE GRAO NOBRE TOR E MOI TRAD 500G",1,1,"Mercearia"],["MER0019","CAFE SOLUVEL NESCAFE TRADITIONAL 75G",1,1,"Mercearia"],["MER0020","ADOCANTE LIQ GOLD STEVIA 65ML",2,4,"Mercearia"],["MER0024","MOLHO INGLES WORCESTERSHIRE LEA&PERRINS 150ML",3,3,"Mercearia"],["MER0025","CONDIMENTO MOSTARDA PREDILECTA 200G",2,4,"Mercearia"],["MER0026","CONDIMENTO KETCHUP PREDILECTA 200G",3,3,"Mercearia"],["MER0027","CONDIMENTO MAIONESE PREDILECTA 200G",1,3,"Mercearia"],["MER0028","ARROZ BRANCO TIO JOAO T1 1KG",4,2,"Mercearia"],["MER0029","FEIJAO CARIOCA MINAS MAIS 500G",3,3,"Mercearia"],["MER0031","MACARRAO ISABELA ESPAGUETE 500G",3,3,"Mercearia"],["MER0032","OLEO VEGETAL SOJA LIZA 900ML",2,2,"Mercearia"],["MER0033","ACUCAR REFINADO UNIAO 1KG",2,2,"Mercearia"],["MER0035","SAL REFINADO CISNE 1KG",2,4,"Mercearia"],["MER0036","FARINHA TRIGO DONA BENTA 1KG",2,2,"Mercearia"],["MER0038","TEMPERO COMPLETO SEM PIMENTA KITANO 60G",3,3,"Mercearia"],["REF0001","MARMITA EXECUTIVA FRANGO GRELHADO 350G",0,5,"Refeicoes"],["REF0002","MARMITA EXECUTIVA PICANHA 350G",0,3,"Refeicoes"],["REF0003","MARMITA EXECUTIVA CARNE MOIDA 350G",0,4,"Refeicoes"],["REF0004","MARMITA FIT FRANGO C/ LEGUMES 300G",0,3,"Refeicoes"],["PAD0001","PAO DE QUEIJO CONGELADO 1KG",1,1,"Padaria"],["PAD0003","PAO FORMA PLUSVITA TRADICIONAL 450G",1,1,"Padaria"],["PAD0005","BISCOITO MAIZENA MARILAN 400G",2,2,"Padaria"],["PAD0006","BISCOITO RECHEADO NEGRESCO 140G",3,3,"Padaria"],["PAD0007","BISCOITO AGUA E SAL MARILAN 400G",1,1,"Padaria"],["PAD0009","BISCOITO CREAM CRACKER MARILAN 400G",1,3,"Padaria"],["PAD0010","WAFER BAUDUCCO MORANGO 140G",3,3,"Padaria"],["PAD0011","WAFER BAUDUCCO CHOCOLATE 140G",2,4,"Padaria"],["PAD0012","BISCOITO OREO ORIGINAL 90G",5,1,"Padaria"],["PAD0013","BISCOITO RITZ ORIGINAL 100G",4,2,"Padaria"],["PAD0014","BISCOITO CLUB SOCIAL ORIGINAL 141G",3,3,"Padaria"],["REF0005","REFRIGERADO IOGURTE GREGO DANONE MORANGO 90G",4,2,"Refrigerados"],["REF0006","IOGURTE ITALAC MORANGO 170G",5,1,"Refrigerados"],["REF0007","QUEIJO MUSSARELA FATIADO 150G",2,2,"Refrigerados"],["REF0008","PRESUNTO COZIDO FATIADO 150G",2,2,"Refrigerados"],["REF0009","REQUEIJAO CREMOSO VIGOR 200G",2,2,"Refrigerados"],["REF0010","MANTEIGA COM SAL AVIACAO 200G",1,1,"Refrigerados"],["REF0011","LEITE INTEGRAL PIRACANJUBA 1L",3,3,"Refrigerados"],["REF0012","CREME DE LEITE ELEGÊ 200G",2,4,"Refrigerados"],["SNA0001","AMENDOIM CROCANTE DORI ORIGINAL 150G",5,1,"Snacks"],["SNA0002","BATATA PALHA YOKI ORIGINAL 100G",4,2,"Snacks"],["SNA0003","SALGADINHO DORITOS NACHO 60G",5,1,"Snacks"],["SNA0004","SALGADINHO CHEETOS REQUEIJAO 45G",4,2,"Snacks"],["SNA0005","SALGADINHO RUFFLES ORIGINAL 57G",3,3,"Snacks"],["SNA0006","PIPOCA YOKI TRAD MANTEIGA 100G",5,5,"Snacks"],["SNA0008","TORRADA INTEGRAL BAUDUCCO 142G",4,2,"Snacks"],["SNA0009","BATATA PRINGLES ORIGINAL 114G",3,3,"Snacks"],["BEB0115","SUCO DEL VALLE MARACUJA LT 290ML",0,3,"Bebidas"]];
+var D=[["BEB0048","SUCO DEL VALLE UVA LT 290ML",0,3,"Bebidas"],["ACO0021","PULLED PORK LA TOCINETA DESFIADO C/MOLHO BARBECUE 400G",2,1,"Acougue"],["BEB0006","REFRI COCA COLA ZERO 1,5L",5,1,"Bebidas"],["BEB0008","REFRI COCA COLA LT 350ML",5,7,"Bebidas"],["BEB0009","REFRI COCA COLA ZERO LT 350ML",9,9,"Bebidas"],["BEB0010","ENERGETICO MONSTER ULTRA 473ML",5,1,"Bebidas"],["BEB0016","REFRI FANTA UVA LT 350ML",3,3,"Bebidas"],["BEB0022","REFRI H2O LIMONETO 500ML",4,2,"Bebidas"],["BEB0028","AGUA MINERAL CRYSTAL C/GAS 500ML",5,3,"Bebidas"],["BEB0032","MATTE LEAO NATURAL PET 1,5L",4,1,"Bebidas"],["BEB0034","BEBIDA TODDYNHO UHT CHOCOLATE 200ML",12,6,"Bebidas"],["BEB0036","AGUA TONICA ANTARCTICA ZERO LT 350ML",5,1,"Bebidas"],["BEB0038","BEBIDA PROT YOPRO CHOCOLATE 250ML",10,2,"Bebidas"],["BEB0039","BEBIDA YOPRO MORANGO 250ML",5,1,"Bebidas"],["BEB0051","AGUA DE COCO INTEGRAL PURI 300ML",7,1,"Bebidas"],["BEB0064","SUCO DEL VALLE KAPO MORANGO 200ML",5,1,"Bebidas"],["BEB0066","REFRESCO GUARAVITON GUARANA E GINSENG 500ML",6,2,"Bebidas"],["BEB0389","REFRI SCHWEPPES CITRUS 350ML",4,2,"Bebidas"],["BEB0692","ENERGETICO RED BULL ZERO 250ML",5,1,"Bebidas"],["BOM0008","KINDER BUENO WHITE 39G",0,6,"Bomboniere"],["BOM0009","CHOC BIS LACTA 45G XTRA AO LEITE",5,1,"Bomboniere"],["BOM0011","CHOC LACTA AO LEITE 80G",2,2,"Bomboniere"],["BOM0018","CHOC SNICKERS 45GR",1,5,"Bomboniere"],["BOM0019","CHOC TALENTO CASTANHA-DO-PARA 85G",3,3,"Bomboniere"],["BOM0020","CHOC NESTLE KIT KAT TRAD 41,5G",6,2,"Bomboniere"],["BOM0024","CHICLETE TRIDENT MELANCIA 8G",7,3,"Bomboniere"],["BOM0026","BALA HALLS EXTRA FORTE 27,5G",6,2,"Bomboniere"],["BOM0028","BALA HALLS MELANCIA 28G",5,3,"Bomboniere"],["BOM0032","PACOCA SANTA HELENA ROLHA 15G",16,16,"Bomboniere"],["BOM0035","CHOC TWIX AO LEITE ORIGINAL 40G",3,3,"Bomboniere"],["BOM0040","CHOC LACTA LAKA BRANCO 80G",1,3,"Bomboniere"],["BOM0050","BARRA DE CEREAL NUTRY AVELA C/ CHOCOLATE 22G",7,1,"Bomboniere"],["BOM0064","CHOC LACTA DIAMANTE NEGRO 80G",3,1,"Bomboniere"],["BOM0066","CHOC NESTLE CHARGE AO LEITE 30G",6,2,"Bomboniere"],["BOM0072","CHOC M&M AMENDOIM 45G",3,3,"Bomboniere"],["BOM0074","DROPS HALLS MORANGO 28G",5,3,"Bomboniere"],["BOM0076","CHOC LACTA OREO 80G",2,4,"Bomboniere"],["BOM0079","CHOC KINDER BUENO 43G",6,6,"Bomboniere"],["BOM0082","BARRA DE CEREAL NUTRY BANANA C/ MEL E GRANOLA 22G",5,1,"Bomboniere"],["BOM0087","CHOC LACTA SHOT DARK 45G",3,3,"Bomboniere"],["BOM0092","CHOC LACTA FIVE STAR 40G",3,3,"Bomboniere"],["BOM0093","CHOC LACTA LACTA AO LEITE 80G",1,5,"Bomboniere"],["BOM0097","BALA MENTOS FRUIT 37,5G",6,6,"Bomboniere"],["BOM0102","CHOC FERRERO ROCHER 3 UN 37,5G",4,2,"Bomboniere"],["CON0003","LASANHA BOL NAO BASTA BOLONHESA 600G",0,2,"Congelados"],["CON0007","PIZZA SADIA MUSSARELA 460G",1,1,"Congelados"],["CON0010","LASANHA NAO BASTA FRANGO C/ CATUPIRY 600G",1,1,"Congelados"],["CON0018","NUGGETS SADIA 300G",2,4,"Congelados"],["MER0005","BARRA DE CEREAL TRIO BANANA C/AVEIA 20G",7,5,"Mercearia"],["MER0007","BARRA DE CEREAL TRIO CASTANHA C/ MEL 20G",6,2,"Mercearia"],["MER0008","ACHOC PO NESCAU 2.0 400G",1,1,"Mercearia"],["MER0010","CAFE GRAO NOBRE TOR E MOI TRAD 500G",1,1,"Mercearia"],["MER0019","CAFE SOLUVEL NESCAFE TRADITIONAL 75G",1,1,"Mercearia"],["MER0020","ADOCANTE LIQ GOLD STEVIA 65ML",2,4,"Mercearia"],["MER0024","MOLHO INGLES WORCESTERSHIRE LEA&PERRINS 150ML",3,3,"Mercearia"],["MER0025","CONDIMENTO MOSTARDA PREDILECTA 200G",2,4,"Mercearia"],["MER0026","CONDIMENTO KETCHUP PREDILECTA 200G",3,3,"Mercearia"],["MER0027","CONDIMENTO MAIONESE PREDILECTA 200G",1,3,"Mercearia"],["MER0028","ARROZ BRANCO TIO JOAO T1 1KG",4,2,"Mercearia"],["MER0029","FEIJAO CARIOCA MINAS MAIS 500G",3,3,"Mercearia"],["MER0031","MACARRAO ISABELA ESPAGUETE 500G",3,3,"Mercearia"],["MER0032","OLEO VEGETAL SOJA LIZA 900ML",2,2,"Mercearia"],["MER0033","ACUCAR REFINADO UNIAO 1KG",2,2,"Mercearia"],["MER0035","SAL REFINADO CISNE 1KG",2,4,"Mercearia"],["MER0036","FARINHA TRIGO DONA BENTA 1KG",2,2,"Mercearia"],["MER0038","TEMPERO COMPLETO SEM PIMENTA KITANO 60G",3,3,"Mercearia"],["REF0001","MARMITA EXECUTIVA FRANGO GRELHADO 350G",0,5,"Refeicoes"],["REF0002","MARMITA EXECUTIVA PICANHA 350G",0,3,"Refeicoes"],["REF0003","MARMITA EXECUTIVA CARNE MOIDA 350G",0,4,"Refeicoes"],["REF0004","MARMITA FIT FRANGO C/ LEGUMES 300G",0,3,"Refeicoes"],["PAD0001","PAO DE QUEIJO CONGELADO 1KG",1,1,"Padaria"],["PAD0003","PAO FORMA PLUSVITA TRADICIONAL 450G",1,1,"Padaria"],["PAD0005","BISCOITO MAIZENA MARILAN 400G",2,2,"Padaria"],["PAD0006","BISCOITO RECHEADO NEGRESCO 140G",3,3,"Padaria"],["PAD0007","BISCOITO AGUA E SAL MARILAN 400G",1,1,"Padaria"],["PAD0009","BISCOITO CREAM CRACKER MARILAN 400G",1,3,"Padaria"],["PAD0010","WAFER BAUDUCCO MORANGO 140G",3,3,"Padaria"],["PAD0011","WAFER BAUDUCCO CHOCOLATE 140G",2,4,"Padaria"],["PAD0012","BISCOITO OREO ORIGINAL 90G",5,1,"Padaria"],["PAD0013","BISCOITO RITZ ORIGINAL 100G",4,2,"Padaria"],["PAD0014","BISCOITO CLUB SOCIAL ORIGINAL 141G",3,3,"Padaria"],["RFG0005","IOGURTE GREGO DANONE MORANGO 90G",4,2,"Refrigerados"],["RFG0006","IOGURTE ITALAC MORANGO 170G",5,1,"Refrigerados"],["RFG0007","QUEIJO MUSSARELA FATIADO 150G",2,2,"Refrigerados"],["RFG0008","PRESUNTO COZIDO FATIADO 150G",2,2,"Refrigerados"],["RFG0009","REQUEIJAO CREMOSO VIGOR 200G",2,2,"Refrigerados"],["RFG0010","MANTEIGA COM SAL AVIACAO 200G",1,1,"Refrigerados"],["RFG0011","LEITE INTEGRAL PIRACANJUBA 1L",3,3,"Refrigerados"],["RFG0012","CREME DE LEITE ELEGE 200G",2,4,"Refrigerados"],["SNA0001","AMENDOIM CROCANTE DORI ORIGINAL 150G",5,1,"Snacks"],["SNA0002","BATATA PALHA YOKI ORIGINAL 100G",4,2,"Snacks"],["SNA0003","SALGADINHO DORITOS NACHO 60G",5,1,"Snacks"],["SNA0004","SALGADINHO CHEETOS REQUEIJAO 45G",4,2,"Snacks"],["SNA0005","SALGADINHO RUFFLES ORIGINAL 57G",3,3,"Snacks"],["SNA0006","PIPOCA YOKI TRAD MANTEIGA 100G",5,5,"Snacks"],["SNA0008","TORRADA INTEGRAL BAUDUCCO 142G",4,2,"Snacks"],["SNA0009","BATATA PRINGLES ORIGINAL 114G",3,3,"Snacks"],["BEB0115","SUCO DEL VALLE MARACUJA LT 290ML",0,3,"Bebidas"]];
 var qtds={};
-function urg(n){return n.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
-function bc(n,c){var e=document.getElementById(c);e.textContent=n;e.style.display="block";setTimeout(function(){e.style.display="none";},3000);}
-function re(){var t=D.length,p=Object.keys(qtds).length;document.getElementById("total-itens").textContent=t+" itens";document.getElementById("total-comprados").textContent=p+" preenchidos";}
-function setQty(cod,v){
-  var n=parseFloat(v);
-  if(v===""||isNaN(n)||n<0){delete qtds[cod];}else{qtds[cod]=n;}
-  var inp=document.querySelector('[data-cod="'+cod+'"]');
-  if(inp){inp.classList.toggle("filled",qtds[cod]!==undefined);}
-  re();
-}
+function urg(n){return n.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function bc(msg,id){var e=document.getElementById(id);e.textContent=msg;e.style.display="block";setTimeout(function(){e.style.display="none";},3500);}
+function re(){document.getElementById("total-itens").textContent=D.length+" itens";document.getElementById("total-comprados").textContent=Object.keys(qtds).length+" preenchidos";}
+function sq(cod,v){var n=parseFloat(v);if(v===""||isNaN(n)||n<0){delete qtds[cod];}else{qtds[cod]=n;}var inp=document.querySelector("[data-cod=\""+cod+"\"]");if(inp){inp.classList.toggle("filled",qtds[cod]!==undefined);}re();}
 function upd(){
-  var cats={};
-  D.forEach(function(d){if(!cats[d[4]])cats[d[4]]=[];cats[d[4]].push(d);});
-  var html="";
-  Object.keys(cats).sort().forEach(function(cat){
-    html+='<div class="category">'+cat+'</div>';
-    cats[cat].forEach(function(d){
-      var cod=d[0],nom=d[1],qty=d[2],falta=d[3];
-      var cur=qtds[cod]!==undefined?qtds[cod]:"";
-      html+='<div class="item"><div class="item-info"><div class="item-code">'+cod+'</div><div class="item-name">'+nom+'</div><div class="item-stock">Estoque: '+qty+' un &nbsp; <span class="item-falta">Falta: '+falta+'</span></div></div><div class="qty-wrap"><div class="qty-label">Comprei</div><input class="qty-input'+(cur!==""?" filled":"")+ '" type="number" min="0" inputmode="numeric" data-cod="'+cod+'" value="'+cur+'" onchange="setQty(''+cod+'',this.value)" oninput="setQty(''+cod+'',this.value)"></div></div>';
-    });
-  });
-  document.getElementById("lista").innerHTML=html;
-  re();
-}
-function abrirResumo(){
-  var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
-  var html="";
-  if(!itens.length){html='<p class="empty">Nenhum item preenchido ainda.</p>';}
-  else{itens.forEach(function(i){html+='<div class="resumo-item"><span>'+i[1]+'</span><span class="resumo-qty">'+qtds[i[0]]+'</span></div>';});}
-  document.getElementById("resumo-lista").innerHTML=html;
-  document.getElementById("modal-resumo").classList.add("open");
-}
+var cats={};
+D.forEach(function(d){if(!cats[d[4]])cats[d[4]]=[];cats[d[4]].push(d);});
+var h="";
+Object.keys(cats).sort().forEach(function(cat){
+h+='<div class="category">'+cat+'</div>';
+cats[cat].forEach(function(d){
+var cod=d[0],nom=d[1],qty=d[2],flt=d[3];
+var cur=qtds[cod]!==undefined?qtds[cod]:"";
+var cl="qty-input"+(cur!==""?" filled":"");
+h+='<div class="item"><div class="item-info"><div class="item-code">'+cod+'</div><div class="item-name">'+nom+'</div><div class="item-stock">Estoque: '+qty+' un &nbsp; <span class="item-falta">Falta: '+flt+'</span></div></div><div class="qty-wrap"><div class="qty-label">Comprei</div>';
+h+='<input class="'+cl+'" type="number" min="0" inputmode="numeric" data-cod="'+cod+'" value="'+cur+'" onchange="sq(this.dataset.cod,this.value)" oninput="sq(this.dataset.cod,this.value)"></div></div>';
+});});
+document.getElementById("lista").innerHTML=h;re();}
+function abrirResumo(){var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});var h="";if(!itens.length){h='<p style="text-align:center;padding:20px;color:#94a3b8">Nenhum item preenchido.</p>';}else{itens.forEach(function(i){h+='<div class="resumo-item"><span>'+i[1]+'</span><span class="resumo-qty">'+qtds[i[0]]+'</span></div>';});}document.getElementById("resumo-lista").innerHTML=h;document.getElementById("modal-resumo").classList.add("open");}
 function fecharModal(){document.getElementById("modal-resumo").classList.remove("open");}
 function abrirAtt(){document.getElementById("modal-att").classList.add("open");}
 function fecharAtt(){document.getElementById("modal-att").classList.remove("open");}
-function copiarPrompt(){
-  var p="Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.";
-  copiar(p,"ok-msg");
-}
-function copiarLista(){
-  var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
-  if(!itens.length)return;
-  var txt="PICK LIST - PDV SIG\nData: "+new Date().toLocaleDateString("pt-BR")+"\n================================\n";
-  itens.forEach(function(i){txt+=i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n";});
-  txt+="================================\nTotal: "+itens.length+" itens";
-  copiar(txt,"copied-msg");
-}
+function copiarPrompt(){copiar("Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.","ok-msg");}
+function copiarLista(){var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});if(!itens.length)return;var txt="PICK LIST - PDV SIG\nData: "+new Date().toLocaleDateString("pt-BR")+"\n================================\n";itens.forEach(function(i){txt+=i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n";});txt+="================================\nTotal: "+itens.length+" itens";copiar(txt,"copied-msg");}
 function gerarScript(){
-  var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
-  if(!itens.length){alert("Preencha ao menos uma quantidade antes de enviar.");return;}
-  var pC={},pN={};
-  itens.forEach(function(i){
-    pC[i[0]]=qtds[i[0]];
-    pN[urg(i[1]).substring(0,30)]=qtds[i[0]];
-  });
-  var sc="(function(){\n  var pC="+JSON.stringify(pC)+";\n  var pN="+JSON.stringify(pN)+";\n  var rows=document.querySelectorAll('table tr');\n  var s=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;\n  var z=0,p=0;\n  rows.forEach(function(tr){\n    var cells=tr.querySelectorAll('td');if(cells.length<3)return;\n    var cod=cells[0].textContent.trim();\n    var nom=cells[1].textContent.trim().toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').substring(0,30);\n    var inp=tr.querySelector('input[type=\\'number\\'][name*=\\'quantity\\']');if(!inp)return;\n    var val=0;\n    if(pC[cod]!==undefined){val=pC[cod];p++;}else if(pN[nom]!==undefined){val=pN[nom];p++;}else{z++;}\n    s.call(inp,val);inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}));\n  });\n  alert('Pick List preenchida! '+p+' com quantidade, '+z+' zerados.');\n})();";
-  var corpo="Ola!%0A%0ASeguimento%20do%20processo%20de%20entrada%20de%20estoque%20PDV%20SIG.%0A%0A";
-  corpo+="===%20PASSO%20A%20PASSO%20===%0A";
-  corpo+="1.%20Acesse%20o%20VMpay%3A%20vmpay.vertitecnologia.com.br%0A";
-  corpo+="2.%20Va%20em%3A%20Instalacoes%20%3E%20SIG%20ENGENHARIA%20%3E%20Cadastrar%20Pick%20List%0A";
-  corpo+="3.%20Pressione%20F12%20para%20abrir%20o%20Console%20do%20navegador%0A";
-  corpo+="4.%20Clique%20na%20aba%20Console%0A";
-  corpo+="5.%20Cole%20o%20script%20abaixo%20inteiro%20e%20pressione%20Enter%0A";
-  corpo+="6.%20Aguarde%20o%20alerta%20de%20confirmacao%20e%20clique%20em%20Continuar%0A%0A";
-  corpo+="===%20PRODUTOS%20COMPRADOS%20===%0A";
-  itens.forEach(function(i){corpo+=encodeURIComponent("  "+i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n");});
-  corpo+="%0A===%20SCRIPT%20(cole%20no%20Console%20F12)%20===%0A";
-  corpo+=encodeURIComponent(sc);
-  var subj=encodeURIComponent("Pick List PDV SIG - "+new Date().toLocaleDateString("pt-BR"));
-  var mailto="mailto:raphalacerda@gmail.com?subject="+subj+"&body="+corpo;
-  window.location.href=mailto;
-  document.getElementById("copied-msg").textContent="Email aberto! Verifique seu app de email.";
-  document.getElementById("copied-msg").style.display="block";
-  setTimeout(function(){document.getElementById("copied-msg").style.display="none";},4000);
+var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
+if(!itens.length){alert("Preencha ao menos uma quantidade antes de enviar.");return;}
+var pC={},pN={};
+itens.forEach(function(i){pC[i[0]]=qtds[i[0]];pN[urg(i[1]).substring(0,30)]=qtds[i[0]];});
+var sc="(function(){";
+sc+="var pC="+JSON.stringify(pC)+";";
+sc+="var pN="+JSON.stringify(pN)+";";
+sc+="var rows=document.querySelectorAll('table tr');";
+sc+="var s=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;";
+sc+="var z=0,p=0;";
+sc+="rows.forEach(function(tr){";
+sc+="var cells=tr.querySelectorAll('td');if(cells.length<3)return;";
+sc+="var cod=cells[0].textContent.trim();";
+sc+="var nom=cells[1].textContent.trim().toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').substring(0,30);";
+sc+="var inp=tr.querySelector('input[type=\\'number\\'][name*=\\'quantity\\']');if(!inp)return;";
+sc+="var val=0;";
+sc+="if(pC[cod]!==undefined){val=pC[cod];p++;}else if(pN[nom]!==undefined){val=pN[nom];p++;}else{z++;}";
+sc+="s.call(inp,val);inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}));";
+sc+="});";
+sc+="alert('Pick List preenchida! '+p+' com quantidade, '+z+' zerados.');";
+sc+="})();";
+var c="Ola!%0A%0ASeguimento%20do%20processo%20de%20estoque%20PDV%20SIG.%0A%0A";
+c+="===%20PASSO%20A%20PASSO%20===%0A";
+c+="1.%20Acesse%20vmpay.vertitecnologia.com.br%0A";
+c+="2.%20Va%20em%20Instalacoes%20%3E%20SIG%20ENGENHARIA%20%3E%20Cadastrar%20Pick%20List%0A";
+c+="3.%20Pressione%20F12%20%3E%20Console%0A";
+c+="4.%20Cole%20o%20script%20abaixo%20e%20pressione%20Enter%0A";
+c+="5.%20Aguarde%20o%20alerta%20e%20clique%20Continuar%0A%0A";
+c+="===%20PRODUTOS%20===%0A";
+itens.forEach(function(i){c+=encodeURIComponent("  "+i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n");});
+c+="%0A===%20SCRIPT%20===%0A";
+c+=encodeURIComponent(sc);
+var subj=encodeURIComponent("Pick List PDV SIG - "+new Date().toLocaleDateString("pt-BR"));
+window.location.href="mailto:raphalacerda@gmail.com?subject="+subj+"&body="+c;
+bc("Email aberto! Verifique seu app de email.","copied-msg");
 }
-function copiar(txt,id){
-  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){bc("Copiado!",id);}).catch(function(){fb(txt,id);});}else{fb(txt,id);}
-}
-function fb(txt,id){
-  var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.focus();ta.select();
-  try{document.execCommand("copy");bc("Copiado!",id);}catch(e){bc("Erro ao copiar",id);}
-  document.body.removeChild(ta);
-}
+function copiar(txt,id){if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){bc("Copiado!",id);}).catch(function(){fb(txt,id);});}else{fb(txt,id);}}
+function fb(txt,id){var ta=document.createElement("textarea");ta.value=txt;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand("copy");bc("Copiado!",id);}catch(e){}document.body.removeChild(ta);}
 upd();
 </script>
-</body>
-</html>
+</body></html>
