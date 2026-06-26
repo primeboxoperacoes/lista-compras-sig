@@ -84,8 +84,6 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
     <button class="btn bf" onclick="abrirResumo()">Ver Resumo <span class="bc" id="cn">0</span></button>
   </div>
 </div>
-
-<!-- Modal Resumo -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h2>Resumo da Compra</h2>
@@ -94,9 +92,9 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
     <div class="info-msg" id="info-instrucao" style="display:none">
       <strong>Como usar o script:</strong><br>
       1. Abra o VMpay e acesse <em>Instalacao &gt; Cadastrar Pick List</em><br>
-      2. Copie o script abaixo<br>
-      3. No navegador, abra o Console (F12 &gt; Console) e cole o script<br>
-      4. Pressione Enter — todos os campos serao preenchidos automaticamente!
+      2. No navegador, abra o Console (F12 &gt; Console)<br>
+      3. Cole o script copiado e pressione Enter<br>
+      4. Todos os campos serao preenchidos automaticamente!
     </div>
     <div class="script-box" id="script-box"></div>
     <div class="modal-btns">
@@ -107,7 +105,6 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
     <p class="copied-msg" id="copied-msg">Copiado!</p>
   </div>
 </div>
-
 <script>
 var D=[["BEB0048","SUCO DEL VALLE UVA LT 290ML",0,3,"Bebidas"],["ACO0021","PULLED PORK LA TOCINETA DESFIADO C/MOLHO BARBECUE 400G",2,1,"Acougue"],["BEB0006","REFRI COCA COLA ZERO 1,5L",5,1,"Bebidas"],["BEB0008","REFRI COCA COLA LT 350ML",5,7,"Bebidas"],["BEB0009","REFRI COCA COLA ZERO LT 350ML",9,9,"Bebidas"],["BEB0010","ENERGETICO MONSTER ULTRA 473ML",5,1,"Bebidas"],["BEB0016","REFRI FANTA UVA LT 350ML",3,3,"Bebidas"],["BEB0022","REFRI H2O LIMONETO 500ML",4,2,"Bebidas"],["BEB0028","AGUA MINERAL CRYSTAL C/GAS 500ML",5,3,"Bebidas"],["BEB0032","MATTE LEAO NATURAL PET 1,5L",4,1,"Bebidas"],["BEB0034","BEBIDA TODDYNHO UHT CHOCOLATE 200ML",12,6,"Bebidas"],["BEB0036","AGUA TONICA ANTARCTICA ZERO LT 350ML",5,1,"Bebidas"],["BEB0038","BEBIDA PROT YOPRO CHOCOLATE 250ML",10,2,"Bebidas"],["BEB0039","BEBIDA YOPRO MORANGO 250ML",5,1,"Bebidas"],["BEB0051","AGUA DE COCO INTEGRAL PURI 300ML",7,1,"Bebidas"],["BEB0064","SUCO DEL VALLE KAPO MORANGO 200ML",5,1,"Bebidas"],["BEB0066","REFRESCO GUARAVITON GUARANA E GINSENG 500ML",6,2,"Bebidas"],["BEB0389","REFRI SCHWEPPES CITRUS 350ML",4,2,"Bebidas"],["BEB0692","ENERGETICO RED BULL ZERO 250ML",5,1,"Bebidas"],["BOM0008","KINDER BUENO WHITE 39G",0,6,"Bomboniere"],["BOM0009","CHOC BIS LACTA 45G XTRA AO LEITE",5,1,"Bomboniere"],["BOM0011","CHOC LACTA AO LEITE 80G",2,2,"Bomboniere"],["BOM0018","CHOC SNICKERS 45GR",1,5,"Bomboniere"],["BOM0019","CHOC TALENTO CASTANHA-DO-PARA 85G",3,3,"Bomboniere"],["BOM0020","CHOC NESTLE KIT KAT TRAD 41,5G",6,2,"Bomboniere"],["BOM0024","CHICLETE TRIDENT MELANCIA 8G",7,3,"Bomboniere"],["BOM0026","BALA HALLS EXTRA FORTE 27,5G",6,2,"Bomboniere"],["BOM0028","BALA HALLS MELANCIA 28G",5,3,"Bomboniere"],["BOM0032","PACOCA SANTA HELENA ROLHA 15G",16,16,"Bomboniere"],["BOM0035","CHOC TWIX AO LEITE ORIGINAL 40G",3,3,"Bomboniere"],["BOM0040","CHOC LACTA LAKA BRANCO 80G",1,3,"Bomboniere"],["BOM0050","BARRA DE CEREAL NUTRY AVELA C/ CHOCOLATE 22G",7,1,"Bomboniere"],["BOM0064","CHOC LACTA DIAMANTE NEGRO 80G",3,1,"Bomboniere"],["BOM0066","CHOC NESTLE PRESTIGIO 33G",5,3,"Bomboniere"],["BOM0068","BOMBOM SONHO DE VALSA 20g",9,3,"Bomboniere"],["BOM0077","CHOC KINDER BUENO WAFER 43G 2UN",5,1,"Bomboniere"],["BOM0086","BALA MENTOS MINT 37,5G",6,2,"Bomboniere"],["BOM0087","BALA MENTOS FRUIT 37,5G",7,1,"Bomboniere"],["BOM0169","BOMBOM LACTA OURO BRANCO UN",7,5,"Bomboniere"],["BOM0173","PASTILHA TIC TAC MENTA 14,5G",4,2,"Bomboniere"],["BOM0399","BROWNIE MATONELLA CREME DE AVELA 75G",6,2,"Bomboniere"],["BOM0400","BROWNIE MATONELLA DOCE DE LEITE 75G",2,2,"Bomboniere"],["BOM0401","BROWNIE MATONELLA MORANGO 75G",2,2,"Bomboniere"],["BOM0404","BROWNIE MATONELLA LEITINHO 75G",3,5,"Bomboniere"],["BOM0637","PACOQUITA SANTA HELENA ZERO QUAD 18G",0,12,"Bomboniere"],["BOM0847","BROWNIE MATONELLA CREME DE PISTACHE 75G",2,2,"Bomboniere"],["BOM1047","CHOC BATON AO LEITE 16G",9,1,"Bomboniere"],["BOM1186","BROWNIE MATONELLA COOKIES E CREAM 75G",3,1,"Bomboniere"],["BOM1272","BARRA BOLD COOKIES E CREAM 40g",4,2,"Bomboniere"],["BOM1343","BARRA BOLD BOMBOM CROCANTE 40g",5,1,"Bomboniere"],["BOM1533","BROWNIE MATONELLA TORTA DE LIMAO 75G",2,2,"Bomboniere"],["CON0012","HAMBURGUER SADIA HOT POCKET X-CHEDDAR 145G",0,2,"Congelados"],["CON0013","HAMBURGUER SADIA HOT POCKET X-BURGUER 145G",0,2,"Congelados"],["CON0022","MINI LASANHA SADIA BOLONHESA 350G",1,2,"Congelados"],["CON0110","FETTUCCINE PERDIGAO C/MOLHO BRANCO PEITO DE PERU 300G",0,2,"Congelados"],["CON0214","BOLINHA DELLI PRESUNTO QUEIJO 400G",3,2,"Congelados"],["CON0215","COXINHA DELLI DE FRANGO 400G",0,5,"Congelados"],["CON0216","KIBE DELLI CARNE 400G",4,1,"Congelados"],["CON0226","SALGADO DELLI BOLINHA QUEIJO 400G",2,3,"Congelados"],["CON0328","MINUTO X DUPLO BURGUER 185G",4,1,"Congelados"],["CON0330","MINUTO X BACON 130G",3,2,"Congelados"],["CON0331","MINUTO X BURGER 125G",0,5,"Congelados"],["CON0332","MINUTO X DUPLO BACON 185G",3,2,"Congelados"],["CON0346","MINUTO X REQUEIJAO 140G",4,1,"Congelados"],["CON0457","NHOQUE SADIA MOLHO BOLONHESA 300G",1,1,"Congelados"],["CON0759","BATATA ROSTI CARNE MOIDA E QUEIJO MUSSARELA 340G",2,2,"Congelados"],["CON0760","BATATA ROSTI FRANGO E REQUEIJAO CREMOSO 340G",3,1,"Congelados"],["CON0761","BATATA ROSTI FRANGO BACON E CHEDDAR 340G",3,1,"Congelados"],["CON0790","SALGADO DELLI MAIS RISOLE 400G",4,1,"Congelados"],["CON0875","PANQUECA DE CARNE 330G",0,5,"Congelados"],["CON0878","NHOQUE A BOLONHESA 340G",2,3,"Congelados"],["CON0882","CALDO VERDE 500G",2,3,"Congelados"],["CON0989","FETTUCCINE MEU MENU BOLONHESA C/ QUEIJO PARMESAO 300G",0,2,"Congelados"],["MER0496","PIPOCA YOKI MANTEIGA 50G",7,3,"Mercearia"],["MER0599","PIPOCA MICROONDAS YOKI NATURAL COM SAL 50G",8,2,"Mercearia"],["MRC0001","ALMONDEGAS ARROZ INT E LEGUMES 350G",1,4,"Refeicoes"],["MRC0002","ESCONDIDINHO BATATA DOCE C/CARNE 350G",0,5,"Refeicoes"],["MRC0008","SOBRECOXA DE FRANGO CREME DE MILHO E ARROZ INT 350G",4,1,"Refeicoes"],["MRC0013","CALDO DE FEIJAO 400G",0,5,"Refeicoes"],["MRC0019","FRANGO PARMEGIANA C/ARROZ E MIX DE LEGUMES 350G",2,3,"Refeicoes"],["PAD0003","BOLO PANCO LARANJA 300GR",1,2,"Padaria"],["PAD0030","BOLO ANA MARIA BAUNILHA 70GR",3,3,"Padaria"],["PAD0262","BOLO ANA MARIA CHOCO 70GR",5,1,"Padaria"],["REF0256","PUDIM DO RIO TRAD 150G",0,6,"Refrigerados"],["SNK0002","AMENDOIM ELMA CHIPS S/PELE 100G",5,1,"Snacks"],["SNK0018","BISC LOOK WAFER CHOCOLATE 55G",4,2,"Snacks"],["SNK0024","BISC PIRAQUE PRESUNTINHO 100G",2,1,"Snacks"],["SNK0026","BISC PIRAQUE ROLADINHO GOIABA 75G",2,6,"Snacks"],["SNK0027","BISC PIRAQUE MAIZENA TRAD 175G",4,2,"Snacks"],["SNK0031","PIPOCA DO JOHNNY CARAMELO E FLOR DE SAL 75G",9,1,"Snacks"],["SNK0032","PIPOCA DO JOHNNY PARMESAO E AZEITE TRUFADO 40G",4,1,"Snacks"],["SNK0048","BISC TORCIDA BACON 60G",4,1,"Snacks"],["SNK0049","BISC TORCIDA CEBOLA 60G",1,4,"Snacks"],["SNK0050","BISC TORCIDA QUEIJO 60G",4,1,"Snacks"],["SNK0056","BISC CLUB SOCIAL NABISCO 144G",3,1,"Snacks"],["SNK0098","BISC GLOBO SALG POLVILHO 30G",5,5,"Snacks"],["SNK0199","BISC ELMA CHIPS OVINHOS DE AMENDOIM 145G",3,1,"Snacks"],["SNK0233","BATATA LAYS CLASSICA 115G",3,1,"Snacks"],["SNK0288","BISC GLOBO DOCE POLVILHO 30G",5,1,"Snacks"]];
 var T=D.length,qtds={};
@@ -125,7 +122,7 @@ function re(){
     items.forEach(function(item){
       var d=document.createElement("div");d.className="item "+urg(item[3]);
       var qv=qtds[item[0]]!==undefined?qtds[item[0]]:"";
-      d.innerHTML="<div class='item-info'><div class='nm'>"+item[1]+"</div><div class='cd'>"+item[0]+" &bull; Estoque: "+item[2]+" &bull; Faltam: "+item[3]+"</div></div><div class='item-right'><span class='badge "+bc(item[3])+"'>Faltam "+item[3]+"</span><div class='qty-wrap'><span class='qty-label'>Comprei:</span><input class='qty-input"+(qv!==""?" filled":"")+"' type='number' min='0' max='999' placeholder='0' value='"+qv+"' data-code='"+item[0]+"' oninput='setQty(this)'></div></div>";
+      d.innerHTML="<div class='item-info'><div class='nm'>"+item[1]+"</div><div class='cd'>"+item[0]+" &bull; Estoque: "+item[2]+" &bull; Faltam: "+item[3]+"</div></div><div class='item-right'><span class='badge "+bc(item[3])+"'>Faltam "+item[3]+"</span><div class='qty-wrap'><span class='qty-label'>Comprei:</span><input class='qty-input"+(qv!==""?" filled":"")+"' type='number' min='0' max='999' placeholder='0' value='"+qv+"' data-code='"+item[0]+"' data-name='"+item[1]+"' oninput='setQty(this)'></div></div>";
       ls.appendChild(d);
     });
   });
@@ -166,10 +163,18 @@ function copiarLista(){
 function gerarScript(){
   var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
   if(!itens.length)return;
-  var compras={};
-  itens.forEach(function(i){compras[i[0]]=qtds[i[0]];});
+  // Gerar mapa por codigo E por nome (primeiras 30 chars normalizadas)
+  var porCodigo={};
+  var porNome={};
+  itens.forEach(function(i){
+    porCodigo[i[0]]=qtds[i[0]];
+    // Normaliza o nome: uppercase, sem acento, primeiras 30 chars
+    var nNorm=i[1].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").substring(0,30);
+    porNome[nNorm]=qtds[i[0]];
+  });
   var script="(function(){\n";
-  script+="  var compras="+JSON.stringify(compras)+";\n";
+  script+="  var porCod="+JSON.stringify(porCodigo)+";\n";
+  script+="  var porNome="+JSON.stringify(porNome)+";\n";
   script+="  var rows=document.querySelectorAll('table tr');\n";
   script+="  var s=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;\n";
   script+="  var z=0,p=0;\n";
@@ -177,13 +182,16 @@ function gerarScript(){
   script+="    var cells=tr.querySelectorAll('td');\n";
   script+="    if(cells.length<3)return;\n";
   script+="    var cod=cells[0].textContent.trim();\n";
+  script+="    var nome=cells[1].textContent.trim().toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').substring(0,30);\n";
   script+="    var inp=tr.querySelector('input[type=\'number\'][name*=\'quantity\']');\n";
   script+="    if(!inp)return;\n";
-  script+="    var val=compras[cod]!==undefined?compras[cod]:0;\n";
+  script+="    var val=0;\n";
+  script+="    if(porCod[cod]!==undefined){val=porCod[cod];p++;}\n";
+  script+="    else if(porNome[nome]!==undefined){val=porNome[nome];p++;}\n";
+  script+="    else{z++;}\n";
   script+="    s.call(inp,val);\n";
   script+="    inp.dispatchEvent(new Event('input',{bubbles:true}));\n";
   script+="    inp.dispatchEvent(new Event('change',{bubbles:true}));\n";
-  script+="    if(compras[cod]!==undefined)p++;else z++;\n";
   script+="  });\n";
   script+="  alert('Pick List preenchida! '+p+' itens com quantidade, '+z+' zerados.');\n";
   script+="})();";
