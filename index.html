@@ -8,8 +8,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;min-height:100vh}
 header{background:linear-gradient(135deg,#1e3a8a,#065f46);color:#fff;padding:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-header h1{font-size:1.1rem;font-weight:700}
-header p{font-size:.72rem;opacity:.8;margin-top:1px}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.hdr-info h1{font-size:1.1rem;font-weight:700}
+.hdr-info p{font-size:.72rem;opacity:.8;margin-top:1px}
+.btn-atualizar{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:7px 12px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.btn-atualizar:active{background:rgba(255,255,255,.3)}
 .sb{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .st{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 11px;font-size:.72rem;font-weight:600}
 .pw{height:4px;background:rgba(255,255,255,.25);border-radius:2px;margin-top:10px;overflow:hidden}
@@ -20,17 +23,13 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
 .cl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#718096;padding:8px 14px 3px;background:#f0f4f8}
 .list{padding:6px 14px 120px}
 .item{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:11px 12px;margin-bottom:7px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid #ccc}
-.item.urgent{border-left-color:#dc2626}
-.item.medium{border-left-color:#d97706}
-.item.low{border-left-color:#16a34a}
+.item.urgent{border-left-color:#dc2626}.item.medium{border-left-color:#d97706}.item.low{border-left-color:#16a34a}
 .item-info{flex:1;min-width:0}
 .nm{font-size:.82rem;font-weight:600;color:#1e293b;line-height:1.3}
 .cd{font-size:.68rem;color:#94a3b8;margin-top:1px}
 .item-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
 .badge{border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:700;white-space:nowrap}
-.badge.high{background:#fee2e2;color:#b91c1c}
-.badge.med{background:#fef3c7;color:#b45309}
-.badge.low{background:#dcfce7;color:#15803d}
+.badge.high{background:#fee2e2;color:#b91c1c}.badge.med{background:#fef3c7;color:#b45309}.badge.low{background:#dcfce7;color:#15803d}
 .qty-wrap{display:flex;align-items:center;gap:5px}
 .qty-label{font-size:.68rem;color:#64748b;white-space:nowrap}
 .qty-input{width:56px;padding:5px 6px;border:2px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-weight:600;text-align:center;color:#1e293b;outline:none;-webkit-appearance:none}
@@ -55,19 +54,31 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
 .ri-qty{font-size:.85rem;font-weight:700;color:#065f46;background:#dcfce7;padding:3px 10px;border-radius:20px;white-space:nowrap}
 .modal-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .mbtn{flex:1;padding:11px;border-radius:12px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;min-width:120px}
-.mbtn-close{background:#f1f5f9;color:#475569}
-.mbtn-copy{background:#1e3a8a;color:#fff}
-.mbtn-script{background:linear-gradient(135deg,#065f46,#0d9488);color:#fff}
+.mbtn-close{background:#f1f5f9;color:#475569}.mbtn-copy{background:#1e3a8a;color:#fff}.mbtn-script{background:linear-gradient(135deg,#065f46,#0d9488);color:#fff}
 .info-msg{font-size:.72rem;color:#64748b;margin-top:10px;line-height:1.5;background:#f8fafc;border-radius:8px;padding:10px;border-left:3px solid #1e3a8a}
 .copied-msg{text-align:center;font-size:.78rem;color:#16a34a;margin-top:8px;display:none;font-weight:600}
 .no-items-msg{text-align:center;padding:20px;color:#94a3b8;font-size:.85rem}
 .script-box{background:#1e293b;color:#86efac;font-family:monospace;font-size:.7rem;padding:12px;border-radius:8px;margin-top:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;display:none;max-height:200px;overflow-y:auto}
+.modal-att{background:#fff;border-radius:16px;padding:20px;max-width:400px;margin:40px auto}
+.modal-att h2{font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:6px}
+.modal-att p{font-size:.8rem;color:#64748b;line-height:1.5;margin-bottom:12px}
+.prompt-box{background:#eef2ff;border-radius:10px;padding:12px;font-size:.8rem;color:#1e293b;line-height:1.6;border-left:3px solid #1e3a8a;margin-bottom:14px;font-style:italic}
+.att-btns{display:flex;gap:8px}
+.abtn{flex:1;padding:11px;border-radius:12px;font-size:.82rem;font-weight:700;cursor:pointer;border:none}
+.abtn-f{background:#f1f5f9;color:#475569}
+.abtn-c{background:linear-gradient(135deg,#1e3a8a,#065f46);color:#fff;flex:2}
+.ok-msg{font-size:.78rem;color:#16a34a;text-align:center;margin-top:10px;display:none;font-weight:600}
 </style>
 </head>
 <body>
 <header>
-  <h1>Compras - PDV SIG</h1>
-  <p>Primebox Operacoes</p>
+  <div class="hdr-row">
+    <div class="hdr-info">
+      <h1>Compras - PDV SIG</h1>
+      <p>Primebox Operacoes</p>
+    </div>
+    <button class="btn-atualizar" onclick="abrirAtt()">&#x21BB; Atualizar Lista</button>
+  </div>
   <div class="sb">
     <div class="st" id="sr">100 pendentes</div>
     <div class="st" id="sd">0 preenchidos</div>
@@ -87,15 +98,9 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h2>Resumo da Compra</h2>
-    <p class="sub">Itens com quantidade informada. Use o script abaixo para preencher a Pick List automaticamente no VMpay.</p>
+    <p class="sub">Itens com quantidade informada. Use o script abaixo para preencher a Pick List no VMpay.</p>
     <div id="resumo-lista"></div>
-    <div class="info-msg" id="info-instrucao" style="display:none">
-      <strong>Como usar o script:</strong><br>
-      1. Abra o VMpay e acesse <em>Instalacao &gt; Cadastrar Pick List</em><br>
-      2. No navegador, abra o Console (F12 &gt; Console)<br>
-      3. Cole o script copiado e pressione Enter<br>
-      4. Todos os campos serao preenchidos automaticamente!
-    </div>
+    <div class="info-msg" id="info-instrucao" style="display:none"><strong>Como usar:</strong><br>1. Abra VMpay &gt; Instalacao &gt; Cadastrar Pick List<br>2. F12 &gt; Console<br>3. Cole o script e pressione Enter</div>
     <div class="script-box" id="script-box"></div>
     <div class="modal-btns">
       <button class="mbtn mbtn-close" onclick="fecharModal()">Fechar</button>
@@ -103,6 +108,18 @@ header p{font-size:.72rem;opacity:.8;margin-top:1px}
       <button class="mbtn mbtn-script" onclick="gerarScript()">Script VMpay</button>
     </div>
     <p class="copied-msg" id="copied-msg">Copiado!</p>
+  </div>
+</div>
+<div class="modal-bg" id="modal-att">
+  <div class="modal-att">
+    <h2>&#x21BB; Atualizar Lista de Compras</h2>
+    <p>Copie o prompt abaixo e cole na extensao do Claude. Ele vai acessar o VMpay, ler o estoque atual e atualizar esta lista automaticamente.</p>
+    <div class="prompt-box">Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.</div>
+    <div class="att-btns">
+      <button class="abtn abtn-f" onclick="fecharAtt()">Fechar</button>
+      <button class="abtn abtn-c" onclick="copiarPrompt()">Copiar Prompt</button>
+    </div>
+    <p class="ok-msg" id="ok-msg">Prompt copiado! Cole na extensao do Claude.</p>
   </div>
 </div>
 <script>
@@ -122,7 +139,7 @@ function re(){
     items.forEach(function(item){
       var d=document.createElement("div");d.className="item "+urg(item[3]);
       var qv=qtds[item[0]]!==undefined?qtds[item[0]]:"";
-      d.innerHTML="<div class='item-info'><div class='nm'>"+item[1]+"</div><div class='cd'>"+item[0]+" &bull; Estoque: "+item[2]+" &bull; Faltam: "+item[3]+"</div></div><div class='item-right'><span class='badge "+bc(item[3])+"'>Faltam "+item[3]+"</span><div class='qty-wrap'><span class='qty-label'>Comprei:</span><input class='qty-input"+(qv!==""?" filled":"")+"' type='number' min='0' max='999' placeholder='0' value='"+qv+"' data-code='"+item[0]+"' data-name='"+item[1]+"' oninput='setQty(this)'></div></div>";
+      d.innerHTML="<div class='item-info'><div class='nm'>"+item[1]+"</div><div class='cd'>"+item[0]+" &bull; Estoque: "+item[2]+" &bull; Faltam: "+item[3]+"</div></div><div class='item-right'><span class='badge "+bc(item[3])+"'>Faltam "+item[3]+"</span><div class='qty-wrap'><span class='qty-label'>Comprei:</span><input class='qty-input"+(qv!==""?" filled":"")+"' type='number' min='0' max='999' placeholder='0' value='"+qv+"' data-code='"+item[0]+"' oninput='setQty(this)'></div></div>";
       ls.appendChild(d);
     });
   });
@@ -152,64 +169,46 @@ function abrirResumo(){
   document.getElementById("modal").classList.add("open");
 }
 function fecharModal(){document.getElementById("modal").classList.remove("open");}
+function abrirAtt(){
+  document.getElementById("ok-msg").style.display="none";
+  document.getElementById("modal-att").classList.add("open");
+}
+function fecharAtt(){document.getElementById("modal-att").classList.remove("open");}
+function copiarPrompt(){
+  var p="Atualize a lista de compras do PDV SIG. Acesse a instalacao 157437 no VMpay, leia a tabela de canaletas, filtre os produtos com Estado Ativo e Faltam maior que zero, e atualize o index.html no repositorio primeboxoperacoes/lista-compras-sig no GitHub com os novos dados.";
+  copiar(p,"ok-msg");
+}
 function copiarLista(){
   var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
   if(!itens.length)return;
   var txt="PICK LIST - PDV SIG\nData: "+new Date().toLocaleDateString("pt-BR")+"\n================================\n";
   itens.forEach(function(i){txt+=i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n";});
   txt+="================================\nTotal: "+itens.length+" itens";
-  copiar(txt);
+  copiar(txt,"copied-msg");
 }
 function gerarScript(){
   var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
   if(!itens.length)return;
-  // Gerar mapa por codigo E por nome (primeiras 30 chars normalizadas)
-  var porCodigo={};
-  var porNome={};
+  var pC={},pN={};
   itens.forEach(function(i){
-    porCodigo[i[0]]=qtds[i[0]];
-    // Normaliza o nome: uppercase, sem acento, primeiras 30 chars
-    var nNorm=i[1].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").substring(0,30);
-    porNome[nNorm]=qtds[i[0]];
+    pC[i[0]]=qtds[i[0]];
+    pN[i[1].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").substring(0,30)]=qtds[i[0]];
   });
-  var script="(function(){\n";
-  script+="  var porCod="+JSON.stringify(porCodigo)+";\n";
-  script+="  var porNome="+JSON.stringify(porNome)+";\n";
-  script+="  var rows=document.querySelectorAll('table tr');\n";
-  script+="  var s=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;\n";
-  script+="  var z=0,p=0;\n";
-  script+="  rows.forEach(function(tr){\n";
-  script+="    var cells=tr.querySelectorAll('td');\n";
-  script+="    if(cells.length<3)return;\n";
-  script+="    var cod=cells[0].textContent.trim();\n";
-  script+="    var nome=cells[1].textContent.trim().toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').substring(0,30);\n";
-  script+="    var inp=tr.querySelector('input[type=\'number\'][name*=\'quantity\']');\n";
-  script+="    if(!inp)return;\n";
-  script+="    var val=0;\n";
-  script+="    if(porCod[cod]!==undefined){val=porCod[cod];p++;}\n";
-  script+="    else if(porNome[nome]!==undefined){val=porNome[nome];p++;}\n";
-  script+="    else{z++;}\n";
-  script+="    s.call(inp,val);\n";
-  script+="    inp.dispatchEvent(new Event('input',{bubbles:true}));\n";
-  script+="    inp.dispatchEvent(new Event('change',{bubbles:true}));\n";
-  script+="  });\n";
-  script+="  alert('Pick List preenchida! '+p+' itens com quantidade, '+z+' zerados.');\n";
-  script+="})();";
-  document.getElementById("script-box").textContent=script;
+  var sc="(function(){\n  var pC="+JSON.stringify(pC)+";\n  var pN="+JSON.stringify(pN)+";\n  var rows=document.querySelectorAll('table tr');\n  var s=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;\n  var z=0,p=0;\n  rows.forEach(function(tr){\n    var cells=tr.querySelectorAll('td');if(cells.length<3)return;\n    var cod=cells[0].textContent.trim();\n    var nom=cells[1].textContent.trim().toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').substring(0,30);\n    var inp=tr.querySelector('input[type=\'number\'][name*=\'quantity\']');if(!inp)return;\n    var val=0;\n    if(pC[cod]!==undefined){val=pC[cod];p++;}else if(pN[nom]!==undefined){val=pN[nom];p++;}else{z++;}\n    s.call(inp,val);inp.dispatchEvent(new Event('input',{bubbles:true}));inp.dispatchEvent(new Event('change',{bubbles:true}));\n  });\n  alert('Pick List preenchida! '+p+' com quantidade, '+z+' zerados.');\n})();";
+  document.getElementById("script-box").textContent=sc;
   document.getElementById("script-box").style.display="block";
   document.getElementById("info-instrucao").style.display="block";
-  copiar(script);
+  copiar(sc,"copied-msg");
 }
-function copiar(txt){
-  if(navigator.clipboard){navigator.clipboard.writeText(txt).catch(function(){fallbackCopy(txt);});}
-  else{fallbackCopy(txt);}
-  var m=document.getElementById("copied-msg");m.style.display="block";setTimeout(function(){m.style.display="none";},2500);
+function copiar(txt,msgId){
+  if(navigator.clipboard){navigator.clipboard.writeText(txt).catch(function(){fb(txt);});}else{fb(txt);}
+  var m=document.getElementById(msgId);m.style.display="block";
+  if(msgId==="copied-msg")setTimeout(function(){m.style.display="none";},2500);
 }
-function fallbackCopy(txt){
-  var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);
-}
+function fb(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();document.execCommand("copy");document.body.removeChild(a);}
 function rs(){if(!confirm("Reiniciar? Todas as quantidades serao apagadas."))return;qtds={};re();}
 document.getElementById("modal").addEventListener("click",function(e){if(e.target===this)fecharModal();});
+document.getElementById("modal-att").addEventListener("click",function(e){if(e.target===this)fecharAtt();});
 re();
 </script>
 </body>
