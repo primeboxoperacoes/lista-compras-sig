@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Lista de Compras - PDV SIG | Primebox Operacoes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;min-height:100vh}
+header{background:linear-gradient(135deg,#1e3a8a,#065f46);color:#fff;padding:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+header h1{font-size:1.1rem;font-weight:700}
+header p{font-size:.72rem;opacity:.8;margin-top:1px}
+.sb{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.st{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 11px;font-size:.72rem;font-weight:600}
+.pw{height:4px;background:rgba(255,255,255,.25);border-radius:2px;margin-top:10px;overflow:hidden}
+.pb{height:100%;background:#34d399;border-radius:2px;transition:width .4s}
+.sw{padding:10px 14px;background:#fff;border-bottom:1px solid #e2e8f0}
+.sw input{width:100%;padding:9px 14px;border:2px solid #e2e8f0;border-radius:50px;font-size:.9rem;outline:none}
+.sw input:focus{border-color:#1e3a8a}
+.cl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#718096;padding:8px 14px 3px;background:#f0f4f8}
+.list{padding:6px 14px 120px}
+.item{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:11px 12px;margin-bottom:7px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid #ccc}
+.item.urgent{border-left-color:#dc2626}
+.item.medium{border-left-color:#d97706}
+.item.low{border-left-color:#16a34a}
+.item-info{flex:1;min-width:0}
+.nm{font-size:.82rem;font-weight:600;color:#1e293b;line-height:1.3}
+.cd{font-size:.68rem;color:#94a3b8;margin-top:1px}
+.item-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.badge{border-radius:20px;padding:2px 9px;font-size:.7rem;font-weight:700;white-space:nowrap}
+.badge.high{background:#fee2e2;color:#b91c1c}
+.badge.med{background:#fef3c7;color:#b45309}
+.badge.low{background:#dcfce7;color:#15803d}
+.qty-wrap{display:flex;align-items:center;gap:5px}
+.qty-label{font-size:.68rem;color:#64748b;white-space:nowrap}
+.qty-input{width:54px;padding:4px 6px;border:2px solid #e2e8f0;border-radius:8px;font-size:.82rem;font-weight:600;text-align:center;color:#1e293b;outline:none;-webkit-appearance:none}
+.qty-input:focus{border-color:#1e3a8a}
+.qty-input.filled{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.empty{text-align:center;padding:50px 20px;color:#94a3b8;display:none}
+.fb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:10px 14px;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08)}
+.fb-btns{display:flex;gap:8px}
+.btn{flex:1;padding:12px;border-radius:12px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;-webkit-tap-highlight-color:transparent}
+.br{background:#f1f5f9;color:#475569;border:2px solid #e2e8f0}
+.bf{background:linear-gradient(135deg,#1e3a8a,#065f46);color:#fff;flex:2}
+.bc{display:inline-block;background:rgba(255,255,255,.25);border-radius:10px;padding:1px 7px;font-size:.78rem;margin-left:4px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;overflow-y:auto;padding:20px 14px}
+.modal-bg.open{display:block}
+.modal{background:#fff;border-radius:16px;padding:20px;max-width:500px;margin:0 auto}
+.modal h2{font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:4px}
+.modal .sub{font-size:.75rem;color:#64748b;margin-bottom:14px}
+.resumo-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9}
+.resumo-item:last-child{border-bottom:none}
+.ri-code{font-size:.7rem;color:#94a3b8;min-width:70px}
+.ri-name{flex:1;font-size:.8rem;color:#1e293b;font-weight:500;line-height:1.3}
+.ri-qty{font-size:.88rem;font-weight:700;color:#065f46;background:#dcfce7;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.mbtn{flex:1;padding:12px;border-radius:12px;font-size:.85rem;font-weight:700;cursor:pointer;border:none}
+.mbtn-close{background:#f1f5f9;color:#475569}
+.mbtn-copy{background:linear-gradient(135deg,#1e3a8a,#065f46);color:#fff}
+.copied-msg{text-align:center;font-size:.78rem;color:#16a34a;margin-top:8px;display:none}
+.no-items-msg{text-align:center;padding:20px;color:#94a3b8;font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Compras - PDV SIG</h1>
+  <p>Primebox Operacoes</p>
+  <div class="sb">
+    <div class="st" id="sr">100 pendentes</div>
+    <div class="st" id="sd">0 preenchidos</div>
+    <div class="st" id="sz">0 zerados</div>
+  </div>
+  <div class="pw"><div class="pb" id="pb" style="width:0%"></div></div>
+</header>
+<div class="sw"><input type="search" id="q" placeholder="Buscar produto ou codigo..." oninput="re()"></div>
+<div class="list" id="ls"></div>
+<div class="empty" id="em"><p>Todos preenchidos!</p></div>
+<div class="fb">
+  <div class="fb-btns">
+    <button class="btn br" onclick="rs()">Reiniciar</button>
+    <button class="btn bf" onclick="abrirResumo()">Ver Resumo <span class="bc" id="cn">0</span></button>
+  </div>
+</div>
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2>Resumo da Compra</h2>
+    <p class="sub">Use para criar o Pick List no VMpay</p>
+    <div id="resumo-lista"></div>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-close" onclick="fecharModal()">Fechar</button>
+      <button class="mbtn mbtn-copy" onclick="copiarResumo()">Copiar Lista</button>
+    </div>
+    <p class="copied-msg" id="copied-msg">Copiado!</p>
+  </div>
+</div>
+<script>
+var D=[["BEB0048","SUCO DEL VALLE UVA LT 290ML",0,3,"Bebidas"],["ACO0021","PULLED PORK LA TOCINETA DESFIADO C/MOLHO BARBECUE 400G",2,1,"Acougue"],["BEB0006","REFRI COCA COLA ZERO 1,5L",5,1,"Bebidas"],["BEB0008","REFRI COCA COLA LT 350ML",5,7,"Bebidas"],["BEB0009","REFRI COCA COLA ZERO LT 350ML",9,9,"Bebidas"],["BEB0010","ENERGETICO MONSTER ULTRA 473ML",5,1,"Bebidas"],["BEB0016","REFRI FANTA UVA LT 350ML",3,3,"Bebidas"],["BEB0022","REFRI H2O LIMONETO 500ML",4,2,"Bebidas"],["BEB0028","AGUA MINERAL CRYSTAL C/GAS 500ML",5,3,"Bebidas"],["BEB0032","MATTE LEAO NATURAL PET 1,5L",4,1,"Bebidas"],["BEB0034","BEBIDA TODDYNHO UHT CHOCOLATE 200ML",12,6,"Bebidas"],["BEB0036","AGUA TONICA ANTARCTICA ZERO LT 350ML",5,1,"Bebidas"],["BEB0038","BEBIDA PROT YOPRO CHOCOLATE 250ML",10,2,"Bebidas"],["BEB0039","BEBIDA YOPRO MORANGO 250ML",5,1,"Bebidas"],["BEB0051","AGUA DE COCO INTEGRAL PURI 300ML",7,1,"Bebidas"],["BEB0064","SUCO DEL VALLE KAPO MORANGO 200ML",5,1,"Bebidas"],["BEB0066","REFRESCO GUARAVITON GUARANA E GINSENG 500ML",6,2,"Bebidas"],["BEB0389","REFRI SCHWEPPES CITRUS 350ML",4,2,"Bebidas"],["BEB0692","ENERGETICO RED BULL ZERO 250ML",5,1,"Bebidas"],["BOM0008","KINDER BUENO WHITE 39G",0,6,"Bomboniere"],["BOM0009","CHOC BIS LACTA 45G XTRA AO LEITE",5,1,"Bomboniere"],["BOM0011","CHOC LACTA AO LEITE 80G",2,2,"Bomboniere"],["BOM0018","CHOC SNICKERS 45GR",1,5,"Bomboniere"],["BOM0019","CHOC TALENTO CASTANHA-DO-PARA 85G",3,3,"Bomboniere"],["BOM0020","CHOC NESTLE KIT KAT TRAD 41,5G",6,2,"Bomboniere"],["BOM0024","CHICLETE TRIDENT MELANCIA 8G",7,3,"Bomboniere"],["BOM0026","BALA HALLS EXTRA FORTE 27,5G",6,2,"Bomboniere"],["BOM0028","BALA HALLS MELANCIA 28G",5,3,"Bomboniere"],["BOM0032","PACOCA SANTA HELENA ROLHA 15G",16,16,"Bomboniere"],["BOM0035","CHOC TWIX AO LEITE ORIGINAL 40G",3,3,"Bomboniere"],["BOM0040","CHOC LACTA LAKA BRANCO 80G",1,3,"Bomboniere"],["BOM0050","BARRA DE CEREAL NUTRY AVELA C/ CHOCOLATE 22G",7,1,"Bomboniere"],["BOM0064","CHOC LACTA DIAMANTE NEGRO 80G",3,1,"Bomboniere"],["BOM0066","CHOC NESTLE PRESTIGIO 33G",5,3,"Bomboniere"],["BOM0068","BOMBOM SONHO DE VALSA 20g",9,3,"Bomboniere"],["BOM0077","CHOC KINDER BUENO WAFER 43G 2UN",5,1,"Bomboniere"],["BOM0086","BALA MENTOS MINT 37,5G",6,2,"Bomboniere"],["BOM0087","BALA MENTOS FRUIT 37,5G",7,1,"Bomboniere"],["BOM0169","BOMBOM LACTA OURO BRANCO UN",7,5,"Bomboniere"],["BOM0173","PASTILHA TIC TAC MENTA 14,5G",4,2,"Bomboniere"],["BOM0399","BROWNIE MATONELLA CREME DE AVELA 75G",6,2,"Bomboniere"],["BOM0400","BROWNIE MATONELLA DOCE DE LEITE 75G",2,2,"Bomboniere"],["BOM0401","BROWNIE MATONELLA MORANGO 75G",2,2,"Bomboniere"],["BOM0404","BROWNIE MATONELLA LEITINHO 75G",3,5,"Bomboniere"],["BOM0637","PACOQUITA SANTA HELENA ZERO QUAD 18G",0,12,"Bomboniere"],["BOM0847","BROWNIE MATONELLA CREME DE PISTACHE 75G",2,2,"Bomboniere"],["BOM1047","CHOC BATON AO LEITE 16G",9,1,"Bomboniere"],["BOM1186","BROWNIE MATONELLA COOKIES E CREAM 75G",3,1,"Bomboniere"],["BOM1272","BARRA BOLD COOKIES E CREAM 40g",4,2,"Bomboniere"],["BOM1343","BARRA BOLD BOMBOM CROCANTE 40g",5,1,"Bomboniere"],["BOM1533","BROWNIE MATONELLA TORTA DE LIMAO 75G",2,2,"Bomboniere"],["CON0012","HAMBURGUER SADIA HOT POCKET X-CHEDDAR 145G",0,2,"Congelados"],["CON0013","HAMBURGUER SADIA HOT POCKET X-BURGUER 145G",0,2,"Congelados"],["CON0022","MINI LASANHA SADIA BOLONHESA 350G",1,2,"Congelados"],["CON0110","FETTUCCINE PERDIGAO C/MOLHO BRANCO PEITO DE PERU 300G",0,2,"Congelados"],["CON0214","BOLINHA DELLI PRESUNTO QUEIJO 400G",3,2,"Congelados"],["CON0215","COXINHA DELLI DE FRANGO 400G",0,5,"Congelados"],["CON0216","KIBE DELLI CARNE 400G",4,1,"Congelados"],["CON0226","SALGADO DELLI BOLINHA QUEIJO 400G",2,3,"Congelados"],["CON0328","MINUTO X DUPLO BURGUER 185G",4,1,"Congelados"],["CON0330","MINUTO X BACON 130G",3,2,"Congelados"],["CON0331","MINUTO X BURGER 125G",0,5,"Congelados"],["CON0332","MINUTO X DUPLO BACON 185G",3,2,"Congelados"],["CON0346","MINUTO X REQUEIJAO 140G",4,1,"Congelados"],["CON0457","NHOQUE SADIA MOLHO BOLONHESA 300G",1,1,"Congelados"],["CON0759","BATATA ROSTI CARNE MOIDA E QUEIJO MUSSARELA 340G",2,2,"Congelados"],["CON0760","BATATA ROSTI FRANGO E REQUEIJAO CREMOSO 340G",3,1,"Congelados"],["CON0761","BATATA ROSTI FRANGO BACON E CHEDDAR 340G",3,1,"Congelados"],["CON0790","SALGADO DELLI MAIS RISOLE 400G",4,1,"Congelados"],["CON0875","PANQUECA DE CARNE 330G",0,5,"Congelados"],["CON0878","NHOQUE A BOLONHESA 340G",2,3,"Congelados"],["CON0882","CALDO VERDE 500G",2,3,"Congelados"],["CON0989","FETTUCCINE MEU MENU BOLONHESA C/ QUEIJO PARMESAO 300G",0,2,"Congelados"],["MER0496","PIPOCA YOKI MANTEIGA 50G",7,3,"Mercearia"],["MER0599","PIPOCA MICROONDAS YOKI NATURAL COM SAL 50G",8,2,"Mercearia"],["MRC0001","ALMONDEGAS ARROZ INT E LEGUMES 350G",1,4,"Refeicoes"],["MRC0002","ESCONDIDINHO BATATA DOCE C/CARNE 350G",0,5,"Refeicoes"],["MRC0008","SOBRECOXA DE FRANGO CREME DE MILHO E ARROZ INT 350G",4,1,"Refeicoes"],["MRC0013","CALDO DE FEIJAO 400G",0,5,"Refeicoes"],["MRC0019","FRANGO PARMEGIANA C/ARROZ E MIX DE LEGUMES 350G",2,3,"Refeicoes"],["PAD0003","BOLO PANCO LARANJA 300GR",1,2,"Padaria"],["PAD0030","BOLO ANA MARIA BAUNILHA 70GR",3,3,"Padaria"],["PAD0262","BOLO ANA MARIA CHOCO 70GR",5,1,"Padaria"],["REF0256","PUDIM DO RIO TRAD 150G",0,6,"Refrigerados"],["SNK0002","AMENDOIM ELMA CHIPS S/PELE 100G",5,1,"Snacks"],["SNK0018","BISC LOOK WAFER CHOCOLATE 55G",4,2,"Snacks"],["SNK0024","BISC PIRAQUE PRESUNTINHO 100G",2,1,"Snacks"],["SNK0026","BISC PIRAQUE ROLADINHO GOIABA 75G",2,6,"Snacks"],["SNK0027","BISC PIRAQUE MAIZENA TRAD 175G",4,2,"Snacks"],["SNK0031","PIPOCA DO JOHNNY CARAMELO E FLOR DE SAL 75G",9,1,"Snacks"],["SNK0032","PIPOCA DO JOHNNY PARMESAO E AZEITE TRUFADO 40G",4,1,"Snacks"],["SNK0048","BISC TORCIDA BACON 60G",4,1,"Snacks"],["SNK0049","BISC TORCIDA CEBOLA 60G",1,4,"Snacks"],["SNK0050","BISC TORCIDA QUEIJO 60G",4,1,"Snacks"],["SNK0056","BISC CLUB SOCIAL NABISCO 144G",3,1,"Snacks"],["SNK0098","BISC GLOBO SALG POLVILHO 30G",5,5,"Snacks"],["SNK0199","BISC ELMA CHIPS OVINHOS DE AMENDOIM 145G",3,1,"Snacks"],["SNK0233","BATATA LAYS CLASSICA 115G",3,1,"Snacks"],["SNK0288","BISC GLOBO DOCE POLVILHO 30G",5,1,"Snacks"]];
+var T=D.length,qtds={};
+function urg(f){return f>=5?"urgent":f>=3?"medium":"low"}
+function bc(f){return f>=5?"high":f>=3?"med":"low"}
+function re(){
+  var ft=document.getElementById("q").value.toLowerCase().trim();
+  var ls=document.getElementById("ls");ls.innerHTML="";
+  var cats=[];D.forEach(function(i){if(cats.indexOf(i[4])<0)cats.push(i[4]);});
+  var any=false;
+  cats.forEach(function(cat){
+    var items=D.filter(function(i){return i[4]===cat&&(ft===""||i[1].toLowerCase().indexOf(ft)>=0||i[0].toLowerCase().indexOf(ft)>=0);});
+    if(!items.length)return;any=true;
+    var lbl=document.createElement("div");lbl.className="cl";lbl.textContent=cat+" ("+items.length+")";ls.appendChild(lbl);
+    items.forEach(function(item){
+      var d=document.createElement("div");d.className="item "+urg(item[3]);
+      var qv=qtds[item[0]]!==undefined?qtds[item[0]]:"";
+      d.innerHTML="<div class='item-info'><div class='nm'>"+item[1]+"</div><div class='cd'>"+item[0]+" - Estoque: "+item[2]+" | Faltam: "+item[3]+"</div></div><div class='item-right'><span class='badge "+bc(item[3])+"'>Faltam "+item[3]+"</span><div class='qty-wrap'><span class='qty-label'>Comprei:</span><input class='qty-input"+(qv!==""?" filled":"")+"' type='number' min='0' max='999' placeholder='0' value='"+qv+"' data-code='"+item[0]+"' oninput='setQty(this)'></div></div>";
+      ls.appendChild(d);
+    });
+  });
+  document.getElementById("em").style.display=any?"none":"block";upd();
+}
+function setQty(input){
+  var code=input.getAttribute("data-code"),val=parseInt(input.value);
+  if(isNaN(val)||val<0){delete qtds[code];input.classList.remove("filled");}
+  else{qtds[code]=val;input.classList.add("filled");}upd();
+}
+function upd(){
+  var d=Object.keys(qtds).length;
+  document.getElementById("sr").textContent=(T-d)+" pendentes";
+  document.getElementById("sd").textContent=d+" preenchidos";
+  document.getElementById("sz").textContent=Object.values(qtds).filter(function(v){return v===0;}).length+" zerados";
+  document.getElementById("cn").textContent=d;
+  document.getElementById("pb").style.width=Math.round(d/T*100)+"%";
+}
+function abrirResumo(){
+  var lista=document.getElementById("resumo-lista");lista.innerHTML="";
+  var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
+  if(!itens.length){lista.innerHTML="<div class='no-items-msg'>Nenhum item preenchido.</div>";}
+  else{itens.forEach(function(item){var div=document.createElement("div");div.className="resumo-item";div.innerHTML="<div class='ri-code'>"+item[0]+"</div><div class='ri-name'>"+item[1]+"</div><div class='ri-qty'>"+qtds[item[0]]+" un</div>";lista.appendChild(div);});}
+  document.getElementById("copied-msg").style.display="none";
+  document.getElementById("modal").classList.add("open");
+}
+function fecharModal(){document.getElementById("modal").classList.remove("open");}
+function copiarResumo(){
+  var itens=D.filter(function(i){return qtds[i[0]]!==undefined;});
+  if(!itens.length)return;
+  var txt="PICK LIST - PDV SIG\nData: "+new Date().toLocaleDateString("pt-BR")+"\n================================\n";
+  itens.forEach(function(i){txt+=i[0]+" | "+i[1]+" | "+qtds[i[0]]+" un\n";});
+  txt+="================================\nTotal: "+itens.length+" itens";
+  if(navigator.clipboard){navigator.clipboard.writeText(txt);}
+  else{var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}
+  var m=document.getElementById("copied-msg");m.style.display="block";setTimeout(function(){m.style.display="none";},2500);
+}
+function rs(){if(!confirm("Reiniciar? Todas as quantidades serao apagadas."))return;qtds={};re();}
+document.getElementById("modal").addEventListener("click",function(e){if(e.target===this)fecharModal();});
+re();
+</script>
+</body>
+</html>
